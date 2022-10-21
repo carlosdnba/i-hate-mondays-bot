@@ -1,0 +1,5 @@
+export const vars = [
+  'TWITTER_API_KEY',
+  'TWITTER_API_KEY_SECRET',
+  'TWITTER_API_BEARER_TOKEN',
+]
