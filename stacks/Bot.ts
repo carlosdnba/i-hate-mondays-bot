@@ -6,7 +6,7 @@ export default class DbStorer extends sst.Stack {
     const bucket = new sst.Bucket(this, 'i-hate-mondays')
 
     // Adding Lambdas
-    new sst.Function(this, 'PhotoPublisher', {
+    const VideoPublisher = new sst.Function(this, 'VideoPublisher', {
       handler: 'src/handlers.tweetHateMondayVideo',
       environment: { UPLOADS_BUCKET_NAME: bucket.bucketName },
       permissions: [bucket]
@@ -15,10 +15,10 @@ export default class DbStorer extends sst.Stack {
     // Cron jobs
     if (scope.local || scope.stage === 'live') {
       // Will run every hour
-      // new sst.Cron(this, 'UpdateEntriesCron', {
-      //   schedule: 'cron(0 * ? * * *)',
-      //   job: UpdateNewEntires
-      // })
+      new sst.Cron(this, 'VideoPublisherCron', {
+        schedule: 'cron(0 13 ? * 2 *)',
+        job: VideoPublisher
+      })
     }
   }
 }
